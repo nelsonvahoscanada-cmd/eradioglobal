@@ -1925,15 +1925,15 @@
             <span data-es="Compartir" data-en="Share">Share</span>
           </button>
           <div id="playerShare" style="display:none; position:absolute; bottom:44px; right:0; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:8px; min-width:200px; z-index:100; box-shadow:0 8px 32px rgba(0,0,0,0.4);">
-            <a href="https://wa.me/?text=🎙️%20Estoy%20escuchando%20eRadio%20Global%20en%20vivo!%20Escúchala%20tú%20también%20👉%20https://eradioglobal.netlify.app" target="_blank" onclick="closeShareMenu('playerShare')"
+            <a href="https://wa.me/?text=🎙️%20Estoy%20escuchando%20eRadio%20Global%20en%20vivo!%20Escúchala%20tú%20también%20👉%20${getBaseUrl()}" target="_blank" id="share-wa" onclick="closeShareMenu('playerShare')"
                style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--white);font-size:13px;transition:background 0.2s;" onmouseover="this.style.background='rgba(141,198,63,0.1)'" onmouseout="this.style.background='transparent'">
               <span style="font-size:18px;">💬</span> WhatsApp
             </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://eradioglobal.netlify.app" target="_blank" onclick="closeShareMenu('playerShare')"
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${getBaseUrl()}" target="_blank" id="share-fb" onclick="closeShareMenu('playerShare')"
                style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--white);font-size:13px;transition:background 0.2s;" onmouseover="this.style.background='rgba(141,198,63,0.1)'" onmouseout="this.style.background='transparent'">
               <span style="font-size:18px;">📘</span> Facebook
             </a>
-            <a href="https://twitter.com/intent/tweet?text=🎙️%20Escuchando%20eRadio%20Global%20en%20vivo!%20&url=https://eradioglobal.netlify.app" target="_blank" onclick="closeShareMenu('playerShare')"
+            <a href="https://twitter.com/intent/tweet?text=🎙️%20Escuchando%20eRadio%20Global%20en%20vivo!%20&url=${getBaseUrl()}" target="_blank" id="share-x" onclick="closeShareMenu('playerShare')"
                style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--white);font-size:13px;transition:background 0.2s;" onmouseover="this.style.background='rgba(141,198,63,0.1)'" onmouseout="this.style.background='transparent'">
               <span style="font-size:18px;">🐦</span> X (Twitter)
             </a>
@@ -2667,7 +2667,7 @@
   });
 
   function copyStreamLink() {
-    navigator.clipboard.writeText('https://eradioglobal.netlify.app').then(() => {
+    navigator.clipboard.writeText(getBaseUrl()).then(() => {
       showCopyToast('¡Link copiado! 🔗');
     }).catch(() => {
       showCopyToast('¡Link copiado! 🔗');
@@ -2688,7 +2688,7 @@
   }
 
   function shareNews(id, title) {
-    const url = 'https://eradioglobal.netlify.app';
+    const url = getBaseUrl();
     const menu = document.getElementById('newsShare_' + id);
     if (!menu) return;
     const isVisible = menu.style.display === 'block';
@@ -2704,7 +2704,38 @@
   });
 
   // ===== CONFIGURACIÓN SUPABASE =====
-  const SUPABASE_URL = 'https://foywryjuqudlhtijeeia.supabase.co';
+  
+  // --- Share URL helpers (always share the CURRENT deployed site, not an old platform link) ---
+  function getBaseUrl() {
+    // Strip query/hash and optional index.html
+    const url = new URL(window.location.href);
+    url.hash = "";
+    url.search = "";
+    url.pathname = url.pathname.replace(/index\.html$/i, "");
+    // If pathname doesn't end with "/" and it's not root, keep as-is (Netlify usually serves "/")
+    return url.origin + url.pathname;
+  }
+
+  function updateShareLinks() {
+    const base = getBaseUrl();
+
+    // Update any hardcoded Netlify links left in markup
+    document.querySelectorAll('a[href*="eradioglobal.netlify.app"]').forEach(a => {
+      a.href = a.href.replace(/https:\/\/eradioglobal\.netlify\.app/g, base);
+    });
+
+    // Player share menu (WhatsApp / Facebook / X)
+    const wa = document.getElementById('share-wa');
+    if (wa) wa.href = `https://wa.me/?text=${encodeURIComponent(base)}`;
+    const fb = document.getElementById('share-fb');
+    if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(base)}`;
+    const xx = document.getElementById('share-x');
+    if (xx) xx.href = `https://x.com/intent/tweet?url=${encodeURIComponent(base)}&text=${encodeURIComponent('Escucha eRadio Global')}`;
+  }
+
+  document.addEventListener('DOMContentLoaded', updateShareLinks);
+
+const SUPABASE_URL = 'https://foywryjuqudlhtijeeia.supabase.co';
   const SUPABASE_KEY = 'sb_publishable__8ikyV5FS_YMo-xeamARyw_Ws-I7lE3';
 
   async function sbFetch(path, options = {}) {
@@ -2849,19 +2880,19 @@
                 COMPARTIR
               </button>
               <div id="newsShare_${featured.id}" style="display:none;position:fixed;bottom:100px;right:20px;background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:8px;min-width:180px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.8);">
-                <a href="https://wa.me/?text=📰%20${encodeURIComponent(featured.title)}%20👉%20https://eradioglobal.netlify.app" target="_blank"
+                <a href="https://wa.me/?text=📰%20${encodeURIComponent(featured.title)}%20👉%20${getBaseUrl()}" target="_blank"
                    style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--white);font-size:13px;" onmouseover="this.style.background='rgba(141,198,63,0.1)'" onmouseout="this.style.background='transparent'">
                   <span style="font-size:16px;">💬</span> WhatsApp
                 </a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=https://eradioglobal.netlify.app&quote=${encodeURIComponent(featured.title)}" target="_blank"
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${getBaseUrl()}&quote=${encodeURIComponent(featured.title)}" target="_blank"
                    style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--white);font-size:13px;" onmouseover="this.style.background='rgba(141,198,63,0.1)'" onmouseout="this.style.background='transparent'">
                   <span style="font-size:16px;">📘</span> Facebook
                 </a>
-                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(featured.title)}&url=https://eradioglobal.netlify.app" target="_blank"
+                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(featured.title)}&url=${getBaseUrl()}" target="_blank"
                    style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--white);font-size:13px;" onmouseover="this.style.background='rgba(141,198,63,0.1)'" onmouseout="this.style.background='transparent'">
                   <span style="font-size:16px;">🐦</span> X (Twitter)
                 </a>
-                <button onclick="navigator.clipboard.writeText('https://eradioglobal.netlify.app'); showCopyToast('¡Link copiado! 🔗'); document.getElementById('newsShare_${featured.id}').style.display='none';"
+                <button onclick="navigator.clipboard.writeText(getBaseUrl()); showCopyToast('¡Link copiado! 🔗'); document.getElementById('newsShare_${featured.id}').style.display='none';"
                    style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;background:transparent;border:none;color:var(--white);font-size:13px;cursor:pointer;width:100%;" onmouseover="this.style.background='rgba(141,198,63,0.1)'" onmouseout="this.style.background='transparent'">
                   <span style="font-size:16px;">🔗</span> Copiar Link
                 </button>
