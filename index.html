@@ -1775,6 +1775,19 @@
   .footer-dot { color: rgba(255,255,255,0.12); }
   @media(max-width: 768px) { .footer-bottom { padding: 20px; flex-direction: column; align-items: flex-start; } }
 
+
+  .radio-status{
+    margin-left:12px;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    white-space: nowrap;
+  }
+  @media(max-width:640px){
+    .radio-status{display:none;}
+  }
+
 </style>
 </head>
 <body>
@@ -1803,7 +1816,7 @@
     </div>
     <button class="nav-live" onclick="togglePlayer()">
       <span class="live-dot"></span>
-      <span data-es="EN VIVO" data-en="ON AIR">ON AIR</span>
+      <span data-es="EN VIVO" data-en="EN VIVO">EN VIVO</span>
     </button>
   </div>
 </nav>
@@ -1900,12 +1913,12 @@
     <div class="player-main">
       <div class="on-air-badge">
         <span class="on-air-dot"></span>
-        ON AIR
+        EN VIVO
       </div>
 
       <div class="now-playing-label">Now Playing</div>
-      <div class="now-playing-title" id="playerTitle">TOP 40 INTERNATIONAL</div>
-      <div class="now-playing-artist" id="playerArtist">eRadio Global — World Hits Mix</div>
+      <div class="now-playing-title" id="playerTitle">CRECIMIENTO PERSONAL</div>
+      <div class="now-playing-artist" id="playerArtist">eRadio Global — Contenido de Valor</div>
 
       <div class="visualizer" id="visualizer"></div>
 
@@ -1913,6 +1926,7 @@
         <button class="play-btn" id="mainPlayBtn" onclick="togglePlay()">
           <svg id="playIcon" width="26" height="26" viewBox="0 0 24 24" fill="black"><path d="M8 5v14l11-7z"/></svg>
         </button>
+        <div class="radio-status" id="radioStatus">Listo para reproducir</div>
 
         <div class="volume-ctrl">
           <svg class="vol-icon" width="16" height="16" viewBox="0 0 24 24" fill="#888"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
@@ -2543,12 +2557,12 @@
   <div class="sticky-info">
     <div class="sticky-cover">🎵</div>
     <div>
-      <div class="sticky-title">Top 40 International Hits</div>
-      <div class="sticky-artist">eRadio Global — Live Stream</div>
+      <div class="sticky-title">Crecimiento Personal — En Vivo</div>
+      <div class="sticky-artist" id="stickyStatus">eRadio Global — Radio de Valor</div>
     </div>
     <div class="sticky-on-air">
       <span style="width:5px;height:5px;background:#ff3333;border-radius:50%;animation:pulse 1s infinite;display:inline-block;"></span>
-      ON AIR
+      EN VIVO
     </div>
   </div>
 
@@ -2618,11 +2632,41 @@
   const radioAudio = new Audio('https://stream.zeno.fm/cuuwrtfwjo6tv');
   radioAudio.preload = 'none';
 
+
+  // ===== Connection UX (Satellite) =====
+  const radioStatusEl = document.getElementById('radioStatus');
+  const stickyStatusEl = document.getElementById('stickyStatus');
+  let connectTimer1 = null;
+  let connectTimer2 = null;
+
+  function setStatus(text){
+    if(radioStatusEl) radioStatusEl.textContent = text;
+    if(stickyStatusEl) stickyStatusEl.textContent = text;
+  }
+
+  function startConnecting(){
+    clearTimeout(connectTimer1); clearTimeout(connectTimer2);
+    setStatus('🛰 Conectando al satélite...');
+    connectTimer1 = setTimeout(()=>setStatus('🌍 Estableciendo enlace global...'), 3000);
+    // If it takes long, reassure
+    connectTimer2 = setTimeout(()=>setStatus('🛰 Conectando al satélite... (puede tardar 10–12s)'), 9000);
+  }
+
+  radioAudio.addEventListener('waiting', startConnecting);
+  radioAudio.addEventListener('stalled', startConnecting);
+  radioAudio.addEventListener('playing', ()=>{ clearTimeout(connectTimer1); clearTimeout(connectTimer2); setStatus('🔴 EN VIVO'); });
+  radioAudio.addEventListener('pause', ()=>{ clearTimeout(connectTimer1); clearTimeout(connectTimer2); setStatus('Listo para reproducir'); });
+  radioAudio.addEventListener('error', ()=>{ clearTimeout(connectTimer1); clearTimeout(connectTimer2); setStatus('⚠️ No se pudo conectar. Intenta de nuevo.'); });
+
+
   function togglePlay() {
     isPlaying = !isPlaying;
     const icons = [document.getElementById('playIcon'), document.getElementById('stickyPlayIcon')];
 
     if(isPlaying) {
+      const sticky = document.getElementById('stickyPlayer');
+      if(sticky) sticky.classList.add('visible');
+      startConnecting();
       radioAudio.play().catch(e => console.warn('Audio error:', e));
       icons.forEach(icon => {
         icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
@@ -3305,55 +3349,6 @@
     <div id="articleContent"></div>
   </div>
 </div>
-
-
-<!-- eRadioGlobal SATELLITE CONNECTION STATUS -->
-<div id="radioStatus" style="
-position:fixed;
-bottom:90px;
-left:50%;
-transform:translateX(-50%);
-background:#0a0a0a;
-color:#8DC63F;
-padding:8px 14px;
-border-radius:8px;
-font-family:'DM Sans', sans-serif;
-font-size:13px;
-z-index:9999;
-box-shadow:0 0 10px rgba(0,0,0,0.6);
-">
-Listo para reproducir
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function(){
-
-const audio = document.querySelector("audio");
-const status = document.getElementById("radioStatus");
-
-if(!audio) return;
-
-audio.addEventListener("play", () => {
-status.innerHTML = "🛰 Conectando al satélite...";
-setTimeout(()=>{
-status.innerHTML = "🌍 Estableciendo enlace global...";
-},3000);
-});
-
-audio.addEventListener("playing", () => {
-status.innerHTML = "🔴 EN VIVO";
-});
-
-audio.addEventListener("waiting", () => {
-status.innerHTML = "🛰 Conectando al satélite...";
-});
-
-audio.addEventListener("error", () => {
-status.innerHTML = "⚠ Problema conectando con la señal";
-});
-
-});
-</script>
 
 </body>
 </html>
