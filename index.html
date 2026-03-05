@@ -1826,6 +1826,75 @@
   .sponsor-card{min-height:120px;}
 }
 
+
+/* LISTENERS BY COUNTRY */
+.listeners-card{
+  margin-top:18px;
+  background:linear-gradient(180deg, rgba(141,198,63,0.10), rgba(10,10,10,0.85));
+  border:1px solid rgba(141,198,63,0.18);
+  border-radius:18px;
+  padding:16px 16px 14px;
+  box-shadow:0 18px 50px rgba(0,0,0,0.35);
+}
+.listeners-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:0 0 10px;
+}
+.listeners-title h3{
+  margin:0;
+  font-size:16px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.listeners-sub{
+  margin:0;
+  color:var(--gray);
+  font-size:13px;
+}
+.country-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:10px;
+}
+.country-chip{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  color:var(--white);
+  font-size:13px;
+  line-height:1;
+  transition:transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.country-chip .flag{font-size:16px}
+.country-chip.active{
+  background:rgba(141,198,63,0.14);
+  border-color:rgba(141,198,63,0.35);
+}
+.country-chip:hover{
+  transform:translateY(-1px);
+  border-color:rgba(141,198,63,0.25);
+}
+.country-live{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:12px;
+  background:rgba(0,0,0,0.35);
+  border:1px solid rgba(255,255,255,0.08);
+  font-size:13px;
+  color:var(--light-gray);
+}
+.country-live strong{color:var(--white)}
+
 </style>
 </head>
 <body>
@@ -2440,6 +2509,28 @@
       </a>
     </div>
   </div>
+
+    <!-- LISTENERS BY COUNTRY -->
+    <div class="listeners-card" id="listeners">
+      <div class="listeners-title">
+        <div>
+          <h3>Oyentes conectados desde:</h3>
+          <p class="listeners-sub">Detección automática del país del visitante (si el navegador lo permite).</p>
+        </div>
+        <div class="country-live" aria-live="polite">
+          <span>🛰️</span>
+          <span id="countryLiveText">Conectando…</span>
+        </div>
+      </div>
+
+      <div class="country-chips" role="list">
+        <div class="country-chip" data-country="Canada" role="listitem"><span class="flag">🇨🇦</span> Canadá</div>
+        <div class="country-chip" data-country="Mexico" role="listitem"><span class="flag">🇲🇽</span> México</div>
+        <div class="country-chip" data-country="Colombia" role="listitem"><span class="flag">🇨🇴</span> Colombia</div>
+        <div class="country-chip" data-country="United States" role="listitem"><span class="flag">🇺🇸</span> USA</div>
+      </div>
+    </div>
+
 </section>
 
 <!-- FOOTER -->
@@ -3390,5 +3481,43 @@ que conecta personas, ideas y oportunidades.
   </div>
 </div>
 
+<script>
+
+// --- LISTENERS (COUNTRY HIGHLIGHT) ---
+(async function(){
+  const live = document.getElementById('countryLiveText');
+  const chips = Array.from(document.querySelectorAll('.country-chip'));
+  if(!live || !chips.length) return;
+
+  function setLive(text){ live.textContent = text; }
+  function activate(countryName){
+    chips.forEach(ch => ch.classList.toggle('active', ch.dataset.country === countryName));
+  }
+
+  // Quick fallback (no network)
+  setLive('Conectando con el satélite…');
+
+  try{
+    // IP geo (best-effort). If blocked, we keep fallback.
+    const controller = new AbortController();
+    const t = setTimeout(()=>controller.abort(), 3500);
+    const res = await fetch('https://ipapi.co/json/', {signal: controller.signal});
+    clearTimeout(t);
+    if(!res.ok) throw new Error('geo failed');
+    const data = await res.json();
+    const country = data && (data.country_name || data.country);
+    if(country){
+      setLive('Conectado desde: ' + country);
+      activate(country);
+      return;
+    }
+    throw new Error('no country');
+  }catch(e){
+    // Keep a clean message if geo is blocked
+    setLive('En vivo (conexión estableciendo)…');
+  }
+})();
+
+</script>
 </body>
 </html>
