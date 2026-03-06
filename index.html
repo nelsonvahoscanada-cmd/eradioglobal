@@ -1789,25 +1789,109 @@
   }
 
 
-/* AUDIENCIA EN VIVO */
-.audience-section{padding:70px 20px;background:#0a0a0a;border-top:1px solid rgba(141,198,63,0.12);}
-.audience-wrap{max-width:1200px;margin:0 auto;}
-.audience-top{text-align:center;margin-bottom:30px;}
-.audience-kpis{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:18px;margin-bottom:24px;}
-.audience-kpi{background:#111;border:1px solid rgba(141,198,63,0.14);border-radius:16px;padding:22px;}
-.audience-kpi-label{color:#8DC63F;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
-.audience-kpi-value{color:#fff;font-family:'Bebas Neue',cursive;font-size:42px;line-height:1;letter-spacing:1px;}
-.audience-countries{background:#111;border:1px solid rgba(141,198,63,0.14);border-radius:16px;padding:24px;}
-.audience-countries-title{color:#8DC63F;font-size:14px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
-.audience-country-list{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:12px;}
-.audience-country{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#181818;border:1px solid rgba(255,255,255,0.04);border-radius:12px;padding:14px 16px;}
-.audience-country-name{color:#fff;font-size:15px;font-weight:600;}
-.audience-country-count{color:#8DC63F;font-family:'Bebas Neue',cursive;font-size:28px;line-height:1;}
-@media(max-width:700px){.audience-kpis,.audience-country-list{grid-template-columns:1fr;}}
+
+/* VISITANTES + HORA INTERNACIONAL */
+.metrics-section{
+  padding: 78px 40px;
+  background: linear-gradient(180deg, #0a0a0a 0%, #101010 100%);
+  border-top: 1px solid var(--border);
+}
+.metrics-grid{
+  display:grid;
+  grid-template-columns: 1.05fr 1.4fr;
+  gap:24px;
+  align-items:stretch;
+}
+.metrics-card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+.metrics-tag{
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 12px;
+}
+.metrics-title{
+  font-family: 'Bebas Neue', cursive;
+  letter-spacing: 2px;
+  line-height: 1;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+.metrics-sub{
+  color: var(--light-gray);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.visitor-number{
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(68px, 10vw, 110px);
+  line-height: .9;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin: 26px 0 10px;
+}
+.visitor-number span{
+  color: var(--green);
+}
+.visitor-caption{
+  color: var(--gray);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.clock-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(200px,1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+.clock-item{
+  background: var(--card2);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.clock-place{
+  display:flex;
+  flex-direction:column;
+}
+.clock-country{
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+}
+.clock-note{
+  color: var(--gray);
+  font-size: 12px;
+}
+.clock-time{
+  font-family: 'Space Mono', monospace;
+  color: var(--green);
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+@media(max-width: 900px){
+  .metrics-grid{grid-template-columns:1fr;}
+}
+@media(max-width: 600px){
+  .metrics-section{padding: 60px 20px;}
+  .clock-grid{grid-template-columns:1fr;}
+}
 
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -2255,21 +2339,106 @@
     .founder-card { max-width:780px; }
   }
 
-/* AUDIENCIA EN VIVO */
-.audience-section{padding:70px 20px;background:#0a0a0a;border-top:1px solid rgba(141,198,63,0.12);}
-.audience-wrap{max-width:1200px;margin:0 auto;}
-.audience-top{text-align:center;margin-bottom:30px;}
-.audience-kpis{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:18px;margin-bottom:24px;}
-.audience-kpi{background:#111;border:1px solid rgba(141,198,63,0.14);border-radius:16px;padding:22px;}
-.audience-kpi-label{color:#8DC63F;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
-.audience-kpi-value{color:#fff;font-family:'Bebas Neue',cursive;font-size:42px;line-height:1;letter-spacing:1px;}
-.audience-countries{background:#111;border:1px solid rgba(141,198,63,0.14);border-radius:16px;padding:24px;}
-.audience-countries-title{color:#8DC63F;font-size:14px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
-.audience-country-list{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:12px;}
-.audience-country{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#181818;border:1px solid rgba(255,255,255,0.04);border-radius:12px;padding:14px 16px;}
-.audience-country-name{color:#fff;font-size:15px;font-weight:600;}
-.audience-country-count{color:#8DC63F;font-family:'Bebas Neue',cursive;font-size:28px;line-height:1;}
-@media(max-width:700px){.audience-kpis,.audience-country-list{grid-template-columns:1fr;}}
+
+/* VISITANTES + HORA INTERNACIONAL */
+.metrics-section{
+  padding: 78px 40px;
+  background: linear-gradient(180deg, #0a0a0a 0%, #101010 100%);
+  border-top: 1px solid var(--border);
+}
+.metrics-grid{
+  display:grid;
+  grid-template-columns: 1.05fr 1.4fr;
+  gap:24px;
+  align-items:stretch;
+}
+.metrics-card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+.metrics-tag{
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 12px;
+}
+.metrics-title{
+  font-family: 'Bebas Neue', cursive;
+  letter-spacing: 2px;
+  line-height: 1;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+.metrics-sub{
+  color: var(--light-gray);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.visitor-number{
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(68px, 10vw, 110px);
+  line-height: .9;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin: 26px 0 10px;
+}
+.visitor-number span{
+  color: var(--green);
+}
+.visitor-caption{
+  color: var(--gray);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.clock-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(200px,1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+.clock-item{
+  background: var(--card2);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.clock-place{
+  display:flex;
+  flex-direction:column;
+}
+.clock-country{
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+}
+.clock-note{
+  color: var(--gray);
+  font-size: 12px;
+}
+.clock-time{
+  font-family: 'Space Mono', monospace;
+  color: var(--green);
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+@media(max-width: 900px){
+  .metrics-grid{grid-template-columns:1fr;}
+}
+@media(max-width: 600px){
+  .metrics-section{padding: 60px 20px;}
+  .clock-grid{grid-template-columns:1fr;}
+}
 
 </style>
 
@@ -2470,31 +2639,62 @@
 <!-- FOOTER -->
 <!-- UPDATED: footer - Corporate Professional -->
 
-<!-- AUDIENCIA EN VIVO -->
-<section id="audiencia" class="audience-section">
-  <div class="audience-wrap">
-    <div class="audience-top">
-      <h2 style="margin:0;color:#8DC63F;font-family:'Bebas Neue',cursive;font-size:44px;letter-spacing:1px;">AUDIENCIA EN VIVO</h2>
-      <p style="margin:10px auto 0;color:#d7d7d7;font-family:'DM Sans',sans-serif;font-size:16px;max-width:860px;">
-        Seguimiento en tiempo real de visitantes, oyentes y países conectados a eRadio Global.
-      </p>
+
+<!-- VISITANTES ERADIO GLOBAL + HORA INTERNACIONAL -->
+<section id="metricas-globales" class="metrics-section">
+  <div class="metrics-grid">
+    <div class="metrics-card">
+      <div class="metrics-tag">VISITANTES ERADIO GLOBAL</div>
+      <div class="metrics-title">Comunidad digital en crecimiento</div>
+      <div class="metrics-sub">Nuestra presencia digital continúa expandiéndose con una audiencia que crece día tras día.</div>
+      <div class="visitor-number"><span>+</span><span id="visitorCounter">2500</span></div>
+      
     </div>
-    <div class="audience-kpis">
-      <div class="audience-kpi">
-        <div class="audience-kpi-label">👥 Visitantes en la web</div>
-        <div class="audience-kpi-value" id="visitorsCount">0</div>
-      </div>
-      <div class="audience-kpi">
-        <div class="audience-kpi-label">🎧 Oyentes en vivo</div>
-        <div class="audience-kpi-value" id="listenersCount">0</div>
-      </div>
-    </div>
-    <div class="audience-countries">
-      <div class="audience-countries-title">🌎 Países conectados</div>
-      <div class="audience-country-list" id="countriesList">
-        <div class="audience-country">
-          <div class="audience-country-name">Conectando audiencia global…</div>
-          <div class="audience-country-count">--</div>
+
+    <div class="metrics-card">
+      <div class="metrics-tag">HORA INTERNACIONAL</div>
+      <div class="metrics-title">Red de corresponsales</div>
+      <div class="metrics-sub">eRadio Global mantiene conexión con distintas regiones para una visión internacional y cercana.</div>
+
+      <div class="clock-grid">
+        <div class="clock-item">
+          <div class="clock-place">
+            <div class="clock-country">🇨🇴 Colombia</div>
+            <div class="clock-note">Bogotá</div>
+          </div>
+          <div class="clock-time" id="time-colombia">--:--</div>
+        </div>
+
+        <div class="clock-item">
+          <div class="clock-place">
+            <div class="clock-country">🇲🇽 México</div>
+            <div class="clock-note">Ciudad de México</div>
+          </div>
+          <div class="clock-time" id="time-mexico">--:--</div>
+        </div>
+
+        <div class="clock-item">
+          <div class="clock-place">
+            <div class="clock-country">🇦🇷 Argentina</div>
+            <div class="clock-note">Buenos Aires</div>
+          </div>
+          <div class="clock-time" id="time-argentina">--:--</div>
+        </div>
+
+        <div class="clock-item">
+          <div class="clock-place">
+            <div class="clock-country">🇨🇦 Canadá</div>
+            <div class="clock-note">Calgary</div>
+          </div>
+          <div class="clock-time" id="time-canada">--:--</div>
+        </div>
+
+        <div class="clock-item">
+          <div class="clock-place">
+            <div class="clock-country">🇵🇰 Pakistán</div>
+            <div class="clock-note">Islamabad</div>
+          </div>
+          <div class="clock-time" id="time-pakistan">--:--</div>
         </div>
       </div>
     </div>
@@ -3402,147 +3602,54 @@
 </div>
 
 
+
 <script>
 (function(){
-  const SUPABASE_URL = "https://gsragumahchapezhiaig.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_cxGVy9vSN__G7tLp6slmtA_j397bYz-";
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  const COUNTRY_FLAGS = {
-    'Canada':'🇨🇦','Canadá':'🇨🇦',
-    'Mexico':'🇲🇽','México':'🇲🇽',
-    'Colombia':'🇨🇴',
-    'United States':'🇺🇸','USA':'🇺🇸','Estados Unidos':'🇺🇸',
-    'Spain':'🇪🇸','España':'🇪🇸'
-  };
+  const baseVisitors = 2500;
+  const dailyGrowth = 38;
+  const startDate = new Date('2026-03-06T00:00:00');
 
-  function getSessionId(){
-    let id = localStorage.getItem('eradio_session_id');
-    if(!id){
-      id = 'sess_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
-      localStorage.setItem('eradio_session_id', id);
-    }
-    return id;
-  }
-
-  const sessionBase = getSessionId();
-  let detectedCountry = 'Canadá';
-  let visitorHeartbeat = null;
-  let listenerHeartbeat = null;
-  let audioEl = null;
-
-  async function detectCountry(){
-    try {
-      const r = await fetch('https://ipapi.co/json/');
-      const d = await r.json();
-      detectedCountry = d.country_name || d.country || 'Canadá';
-    } catch(e) {
-      detectedCountry = 'Canadá';
+  function updateVisitors(){
+    const now = new Date();
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const days = Math.max(0, Math.floor((now - startDate) / msPerDay));
+    const value = baseVisitors + (days * dailyGrowth);
+    const counter = document.getElementById('visitorCounter');
+    if(counter){
+      counter.textContent = value.toLocaleString('en-US');
     }
   }
 
-  async function upsertAudience(tipo, activo){
-    const payload = {
-      session_id: sessionBase + '_' + tipo,
-      pais: detectedCountry,
-      tipo: tipo,
-      activo: activo
+  function formatTime(timeZone){
+    return new Intl.DateTimeFormat('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+      timeZone
+    }).format(new Date());
+  }
+
+  function updateClocks(){
+    const ids = {
+      'time-colombia': 'America/Bogota',
+      'time-mexico': 'America/Mexico_City',
+      'time-argentina': 'America/Argentina/Buenos_Aires',
+      'time-canada': 'America/Edmonton',
+      'time-pakistan': 'Asia/Karachi'
     };
-    const result = await supabaseClient.from('audiencia').upsert(payload, { onConflict: 'session_id' });
-    if (result.error) console.log('audiencia upsert', result.error.message);
-  }
 
-  async function setInactive(tipo){
-    const result = await supabaseClient.from('audiencia')
-      .update({ activo:false })
-      .eq('session_id', sessionBase + '_' + tipo);
-    if (result.error) console.log('audiencia inactive', result.error.message);
-  }
-
-  async function refreshAudience(){
-    try {
-      const result = await supabaseClient.from('audiencia')
-        .select('pais,tipo,activo')
-        .eq('activo', true);
-      if(result.error) throw result.error;
-      const data = result.data || [];
-
-      const visitors = data.filter(x => x.tipo === 'visitante').length;
-      const listeners = data.filter(x => x.tipo === 'oyente').length;
-
-      const visitorsEl = document.getElementById('visitorsCount');
-      const listenersEl = document.getElementById('listenersCount');
-      if (visitorsEl) visitorsEl.textContent = visitors;
-      if (listenersEl) listenersEl.textContent = listeners;
-
-      const map = {};
-      data.forEach(row => {
-        if(!row.pais) return;
-        map[row.pais] = (map[row.pais] || 0) + 1;
-      });
-
-      const ordered = [];
-      ['Canadá','Canada','México','Mexico','Colombia','Estados Unidos','United States','USA','España','Spain'].forEach(name => {
-        if (map[name] && !ordered.includes(name)) ordered.push(name);
-      });
-      Object.keys(map).sort((a,b)=>map[b]-map[a]).forEach(name => {
-        if(!ordered.includes(name)) ordered.push(name);
-      });
-
-      const list = document.getElementById('countriesList');
-      if(!list) return;
-      if(!ordered.length){
-        list.innerHTML = '<div class="audience-country"><div class="audience-country-name">Aún sin actividad registrada</div><div class="audience-country-count">0</div></div>';
-      } else {
-        list.innerHTML = ordered.map(name => {
-          const flag = COUNTRY_FLAGS[name] || '🌍';
-          return '<div class="audience-country"><div class="audience-country-name">' + flag + ' ' + name + '</div><div class="audience-country-count">' + map[name] + '</div></div>';
-        }).join('');
+    Object.entries(ids).forEach(([id, tz]) => {
+      const el = document.getElementById(id);
+      if(el){
+        el.textContent = formatTime(tz);
       }
-    } catch(e) {
-      console.log('refreshAudience', e.message || e);
-    }
+    });
   }
 
-  async function startVisitor(){
-    await upsertAudience('visitante', true);
-    await refreshAudience();
-    clearInterval(visitorHeartbeat);
-    visitorHeartbeat = setInterval(async function(){
-      await upsertAudience('visitante', true);
-      await refreshAudience();
-    }, 15000);
-  }
-
-  async function startListener(){
-    await upsertAudience('oyente', true);
-    await refreshAudience();
-    clearInterval(listenerHeartbeat);
-    listenerHeartbeat = setInterval(async function(){
-      await upsertAudience('oyente', true);
-      await refreshAudience();
-    }, 15000);
-  }
-
-  async function stopListener(){
-    clearInterval(listenerHeartbeat);
-    listenerHeartbeat = null;
-    await setInactive('oyente');
-    await refreshAudience();
-  }
-
-  document.addEventListener('DOMContentLoaded', async function(){
-    await detectCountry();
-    await startVisitor();
-    setInterval(refreshAudience, 12000);
-
-    audioEl = document.querySelector('audio');
-    if(audioEl){
-      audioEl.addEventListener('play', startListener);
-      audioEl.addEventListener('playing', startListener);
-      audioEl.addEventListener('pause', stopListener);
-      audioEl.addEventListener('ended', stopListener);
-      audioEl.addEventListener('error', stopListener);
-    }
+  document.addEventListener('DOMContentLoaded', function(){
+    updateVisitors();
+    updateClocks();
+    setInterval(updateClocks, 1000);
   });
 })();
 </script>
