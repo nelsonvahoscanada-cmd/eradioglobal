@@ -1776,122 +1776,164 @@
   @media(max-width: 768px) { .footer-bottom { padding: 20px; flex-direction: column; align-items: flex-start; } }
 
 
-  .radio-status{
-    margin-left:12px;
-    color: var(--green);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .3px;
-    white-space: nowrap;
-  }
-  @media(max-width:640px){
-    .radio-status{display:none;}
-  }
-
-
-
-/* VISITANTES + HORA INTERNACIONAL */
-.metrics-section{
-  padding: 78px 40px;
-  background: linear-gradient(180deg, #0a0a0a 0%, #101010 100%);
+/* MAPA GLOBAL */
+.map-section{
+  padding: 80px 40px;
+  background: linear-gradient(180deg, var(--dark) 0%, #0a0a0a 100%);
   border-top: 1px solid var(--border);
 }
-.metrics-grid{
+.map-wrap{max-width:1200px;margin:0 auto;}
+.map-header{text-align:center;margin-bottom:34px;}
+.map-grid{
   display:grid;
-  grid-template-columns: 1.05fr 1.4fr;
+  grid-template-columns: 1.3fr 1fr;
   gap:24px;
   align-items:stretch;
 }
-.metrics-card{
+.map-card{
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:28px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.18);
 }
-.metrics-tag{
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+.worldmap-box{
+  position:relative;
+  min-height:420px;
+  overflow:hidden;
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(141,198,63,0.07), transparent 55%),
+    linear-gradient(180deg, #111 0%, #0d0d0d 100%);
+  border:1px solid rgba(255,255,255,.05);
+}
+.worldmap-svg{
+  position:absolute; inset:0; width:100%; height:100%; opacity:.16;
+}
+.map-gridlines{
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(141,198,63,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(141,198,63,.06) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image: radial-gradient(circle at center, black, transparent 95%);
+}
+.map-glow{
+  position:absolute; inset:0;
+  background: radial-gradient(circle at center, rgba(141,198,63,.08), transparent 58%);
+  pointer-events:none;
+}
+.map-point{
+  position:absolute;
+  transform: translate(-50%,-50%);
+  display:flex; align-items:center; gap:8px;
+}
+.map-dot{
+  width:10px; height:10px; border-radius:50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(141,198,63,.55);
+  animation: mapPulse 2s infinite;
+}
+.map-line{
+  width:34px; height:1px; background: linear-gradient(90deg, rgba(141,198,63,.9), rgba(141,198,63,0));
+}
+.map-label{
+  color:var(--white); font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+  background: rgba(10,10,10,.72);
+  border:1px solid rgba(141,198,63,.16);
+  padding:5px 9px; border-radius:100px; white-space:nowrap;
+}
+@keyframes mapPulse{
+  0%{box-shadow:0 0 0 0 rgba(141,198,63,.55);}
+  70%{box-shadow:0 0 0 12px rgba(141,198,63,0);}
+  100%{box-shadow:0 0 0 0 rgba(141,198,63,0);}
+}
+.map-side-list{
+  display:flex; flex-direction:column; gap:12px; margin-top:18px;
+}
+.map-side-item{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:14px 16px; background:var(--card2);
+  border:1px solid rgba(255,255,255,.05); border-radius:12px;
+}
+.map-side-left{display:flex; flex-direction:column; gap:2px;}
+.map-side-country{color:var(--white); font-size:15px; font-weight:700;}
+.map-side-note{color:var(--gray); font-size:12px;}
+.map-side-right{display:flex; align-items:center; gap:12px; flex-shrink:0;}
+.map-side-clock{
   color: var(--green);
-  margin-bottom: 12px;
+  font-family:'Space Mono', monospace;
+  font-size:16px; font-weight:700;
+  min-width:58px; text-align:right;
 }
-.metrics-title{
-  font-family: 'Bebas Neue', cursive;
-  letter-spacing: 2px;
-  line-height: 1;
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-.metrics-sub{
-  color: var(--light-gray);
-  font-size: 15px;
-  line-height: 1.6;
-}
-.visitor-number{
-  font-family: 'Bebas Neue', cursive;
-  font-size: clamp(68px, 10vw, 110px);
-  line-height: .9;
-  letter-spacing: 2px;
-  color: var(--white);
-  margin: 26px 0 10px;
-}
-.visitor-number span{
+.map-side-badge{
   color: var(--green);
+  font-family:'Bebas Neue', cursive;
+  font-size:24px; line-height:1;
+  min-width:28px; text-align:right;
 }
-.visitor-caption{
-  color: var(--gray);
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+@media(max-width:900px){.map-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.map-section{padding:60px 20px;}}
+
+
+/* CONTADOR AUDIENCIA */
+.audience-counter{
+  padding:70px 40px;
+  background:linear-gradient(180deg,#0a0a0a 0%,#101010 100%);
+  border-top:1px solid var(--border);
 }
-.clock-grid{
-  display:grid;
-  grid-template-columns: repeat(2, minmax(200px,1fr));
-  gap: 14px;
-  margin-top: 18px;
+.audience-box{
+  max-width:1100px;
+  margin:0 auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:36px;
+  text-align:center;
 }
-.clock-item{
-  background: var(--card2);
-  border: 1px solid rgba(255,255,255,.05);
-  border-radius: 14px;
-  padding: 16px 18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+.audience-label{
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:10px;
+  font-weight:700;
 }
-.clock-place{
-  display:flex;
-  flex-direction:column;
+.audience-title{
+  font-family:'Bebas Neue',cursive;
+  font-size:56px;
+  letter-spacing:2px;
+  margin-bottom:10px;
 }
-.clock-country{
-  color: var(--white);
-  font-size: 15px;
-  font-weight: 700;
+.audience-number{
+  font-family:'Bebas Neue',cursive;
+  font-size:90px;
+  color:var(--green);
+  line-height:1;
 }
-.clock-note{
-  color: var(--gray);
-  font-size: 12px;
+
+/* PODCAST SPOTIFY */
+.spotify-podcast{
+  padding:70px 40px;
+  background:var(--dark);
+  border-top:1px solid var(--border);
 }
-.clock-time{
-  font-family: 'Space Mono', monospace;
-  color: var(--green);
-  font-size: 18px;
-  font-weight: 700;
-  white-space: nowrap;
+.spotify-wrap{
+  max-width:1100px;
+  margin:0 auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:32px;
 }
-@media(max-width: 900px){
-  .metrics-grid{grid-template-columns:1fr;}
-}
-@media(max-width: 600px){
-  .metrics-section{padding: 60px 20px;}
-  .clock-grid{grid-template-columns:1fr;}
+.spotify-title{
+  font-family:'Bebas Neue',cursive;
+  font-size:48px;
+  letter-spacing:2px;
+  margin-bottom:18px;
 }
 
 </style>
-
 </head>
 <body>
 
@@ -1919,7 +1961,7 @@
     </div>
     <button class="nav-live" onclick="togglePlayer()">
       <span class="live-dot"></span>
-      <span data-es="EN VIVO" data-en="EN VIVO">EN VIVO</span>
+      <span data-es="EN VIVO" data-en="ON AIR">ON AIR</span>
     </button>
   </div>
 </nav>
@@ -2016,12 +2058,12 @@
     <div class="player-main">
       <div class="on-air-badge">
         <span class="on-air-dot"></span>
-        EN VIVO
+        ON AIR
       </div>
 
       <div class="now-playing-label">Now Playing</div>
-      <div class="now-playing-title" id="playerTitle">CRECIMIENTO PERSONAL</div>
-      <div class="now-playing-artist" id="playerArtist">eRadio Global — Contenido de Valor</div>
+      <div class="now-playing-title" id="playerTitle">TOP 40 INTERNATIONAL</div>
+      <div class="now-playing-artist" id="playerArtist">eRadio Global — World Hits Mix</div>
 
       <div class="visualizer" id="visualizer"></div>
 
@@ -2029,7 +2071,6 @@
         <button class="play-btn" id="mainPlayBtn" onclick="togglePlay()">
           <svg id="playIcon" width="26" height="26" viewBox="0 0 24 24" fill="black"><path d="M8 5v14l11-7z"/></svg>
         </button>
-        <div class="radio-status" id="radioStatus">Listo para reproducir</div>
 
         <div class="volume-ctrl">
           <svg class="vol-icon" width="16" height="16" viewBox="0 0 24 24" fill="#888"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
@@ -2136,73 +2177,90 @@
 </section>
 
 <!-- UPDATED: podcast - CNN-style with corporate branding -->
+<section class="podcast-section" id="podcast">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">🎙️ Podcast</div>
+      <div class="section-title">EL PODCAST DEL<br>INMIGRANTE</div>
+      <div class="podcast-corporate-badge">A Vahos Group Company</div>
+    </div>
+    <a href="https://www.youtube.com/@eradioglobal4291" target="_blank" class="section-link">
+      <span>Ver todos los episodios</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
 
-<!-- PODCAST ERADIO GLOBAL (3 EPISODIOS) -->
-<section id="podcast" style="padding:60px 20px;background:#0a0a0a;">
-  <div style="max-width:1200px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:22px;">
-      <h2 style="margin:0;color:#8DC63F;font-family:'Bebas Neue',cursive;font-size:44px;letter-spacing:1px;">
-        PODCAST ERADIO GLOBAL
-      </h2>
-      <p style="margin:10px 0 0;color:#d7d7d7;font-family:'DM Sans',sans-serif;font-size:16px;">
-        Los secretos de la mente millonaria
-      </p>
+  <div class="podcast-grid">
+
+    <div class="podcast-card">
+      <div class="podcast-thumb-wrap">
+        <iframe src="https://www.youtube.com/embed/hc87lEbQ7FI?rel=0&modestbranding=1"
+          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        <div class="podcast-label-badge">Podcast del Inmigrante</div>
+      </div>
+      <div class="podcast-info">
+        <div class="podcast-meta">
+          <span class="podcast-ep-tag">Episodio 1</span>
+          <span class="podcast-date">Feb 2026</span>
+        </div>
+        <div class="podcast-title">El Podcast del Inmigrante</div>
+        <p class="podcast-desc">Historias reales de latinos en Canadá: sus retos, logros y experiencias como nuevos inmigrantes en suelo canadiense.</p>
+        <a href="https://www.youtube.com/watch?v=hc87lEbQ7FI" target="_blank" class="podcast-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          Ver / Escuchar
+        </a>
+      </div>
     </div>
 
-    <div class="podcast-grid" style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;">
-      <div class="podcast-card" style="flex:1 1 320px;max-width:380px;">
-        <iframe style="border-radius:12px;width:100%;height:351px;" src="https://open.spotify.com/embed/episode/09ZWKx7yZ6hAR3NzGSgI8n/video?utm_source=generator" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="podcast-card">
+      <div class="podcast-thumb-wrap">
+        <iframe src="https://www.youtube.com/embed/iiN_y5avAi4?rel=0&modestbranding=1"
+          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        <div class="podcast-label-badge">Podcast del Inmigrante</div>
       </div>
-      <div class="podcast-card" style="flex:1 1 320px;max-width:380px;">
-        <iframe style="border-radius:12px;width:100%;height:351px;" src="https://open.spotify.com/embed/episode/07BKBXd01MWF1vEkE43quH/video?utm_source=generator" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      </div>
-      <div class="podcast-card" style="flex:1 1 320px;max-width:380px;">
-        <iframe style="border-radius:12px;width:100%;height:351px;" src="https://open.spotify.com/embed/episode/5IhQ1J71EylRiH6Zylra7L/video?utm_source=generator" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <div class="podcast-info">
+        <div class="podcast-meta">
+          <span class="podcast-ep-tag">Episodio 2</span>
+          <span class="podcast-date">Feb 2026</span>
+        </div>
+        <div class="podcast-title">El Podcast del Inmigrante</div>
+        <p class="podcast-desc">Conversaciones profundas sobre el proceso de inmigración a Canadá y cómo adaptarse a la nueva vida.</p>
+        <a href="https://www.youtube.com/watch?v=iiN_y5avAi4" target="_blank" class="podcast-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          Ver / Escuchar
+        </a>
       </div>
     </div>
+
+    <div class="podcast-card">
+      <div class="podcast-thumb-wrap">
+        <iframe src="https://www.youtube.com/embed/XQmRXUmMXq8?rel=0&modestbranding=1"
+          allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        <div class="podcast-label-badge">Podcast del Inmigrante</div>
+      </div>
+      <div class="podcast-info">
+        <div class="podcast-meta">
+          <span class="podcast-ep-tag">Episodio 3</span>
+          <span class="podcast-date">Feb 2026</span>
+        </div>
+        <div class="podcast-title">El Podcast del Inmigrante</div>
+        <p class="podcast-desc">Testimonios que inspiran: latinos que llegaron sin nada y construyeron su vida en suelo canadiense.</p>
+        <a href="https://www.youtube.com/watch?v=XQmRXUmMXq8" target="_blank" class="podcast-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          Ver / Escuchar
+        </a>
+      </div>
+    </div>
+
   </div>
 </section>
-
 
 <!-- TV & VIDEO SECTION -->
 <section class="tv-section" id="tv">
   <div class="section-header">
     <div>
       <div class="section-tag" data-es="▶️ Videos" data-en="▶️ Videos">▶️ Videos</div>
-      
-  <!-- Spotify Podcast (Auto-updates with new episodes) -->
-  <div class="spotify-section" style="margin:24px 0 36px; padding:18px; border-radius:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(141,198,63,0.18);">
-    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px;">
-      <div>
-        <div class="section-tag" data-es="🎙 Podcast" data-en="🎙 Podcast">🎙 Podcast</div>
-        <div style="font-family:'Bebas Neue', sans-serif; font-size:34px; line-height:1; letter-spacing:0.8px; margin-top:8px;"
-             data-es="EPISODIOS EN<br>SPOTIFY"
-             data-en="EPISODES ON<br>SPOTIFY">EPISODIOS EN<br>SPOTIFY</div>
-      </div>
-      <a href="https://open.spotify.com/show/36fWEFktCXFzkOtzGftu9j" target="_blank" rel="noopener" class="section-link" style="white-space:nowrap;">
-        <span data-es="Ver todos los episodios" data-en="See all episodes">Ver todos los episodios</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-
-    <iframe
-      data-testid="embed-iframe"
-      style="border-radius:12px; width:100%; max-width:1100px; display:block; margin:0 auto;"
-      src="https://open.spotify.com/embed/show/36fWEFktCXFzkOtzGftu9j/video?utm_source=generator"
-      height="520"
-      frameborder="0"
-      allowfullscreen=""
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"></iframe>
-
-    <div style="opacity:0.85; font-size:13px; margin-top:10px; text-align:center;"
-         data-es="Se actualiza automáticamente cuando publiques un nuevo episodio en Spotify."
-         data-en="Auto-updates whenever you publish a new episode on Spotify.">
-      Se actualiza automáticamente cuando publiques un nuevo episodio en Spotify.
-    </div>
-  </div>
-
-<div class="section-title" data-es="NUESTRO CANAL<br>DE YOUTUBE" data-en="OUR YOUTUBE<br>CHANNEL">NUESTRO CANAL<br>DE YOUTUBE</div>
+      <div class="section-title" data-es="NUESTRO CANAL<br>DE YOUTUBE" data-en="OUR YOUTUBE<br>CHANNEL">NUESTRO CANAL<br>DE YOUTUBE</div>
     </div>
     <a href="https://www.youtube.com/@eradioglobal4291" target="_blank" class="section-link">
       <span data-es="Ver Canal Completo" data-en="View Full Channel">Ver Canal Completo</span>
@@ -2339,105 +2397,161 @@
     .founder-card { max-width:780px; }
   }
 
-
-/* VISITANTES + HORA INTERNACIONAL */
-.metrics-section{
-  padding: 78px 40px;
-  background: linear-gradient(180deg, #0a0a0a 0%, #101010 100%);
+/* MAPA GLOBAL */
+.map-section{
+  padding: 80px 40px;
+  background: linear-gradient(180deg, var(--dark) 0%, #0a0a0a 100%);
   border-top: 1px solid var(--border);
 }
-.metrics-grid{
+.map-wrap{max-width:1200px;margin:0 auto;}
+.map-header{text-align:center;margin-bottom:34px;}
+.map-grid{
   display:grid;
-  grid-template-columns: 1.05fr 1.4fr;
+  grid-template-columns: 1.3fr 1fr;
   gap:24px;
   align-items:stretch;
 }
-.metrics-card{
+.map-card{
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:28px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.18);
 }
-.metrics-tag{
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+.worldmap-box{
+  position:relative;
+  min-height:420px;
+  overflow:hidden;
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(141,198,63,0.07), transparent 55%),
+    linear-gradient(180deg, #111 0%, #0d0d0d 100%);
+  border:1px solid rgba(255,255,255,.05);
+}
+.worldmap-svg{
+  position:absolute; inset:0; width:100%; height:100%; opacity:.16;
+}
+.map-gridlines{
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(141,198,63,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(141,198,63,.06) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image: radial-gradient(circle at center, black, transparent 95%);
+}
+.map-glow{
+  position:absolute; inset:0;
+  background: radial-gradient(circle at center, rgba(141,198,63,.08), transparent 58%);
+  pointer-events:none;
+}
+.map-point{
+  position:absolute;
+  transform: translate(-50%,-50%);
+  display:flex; align-items:center; gap:8px;
+}
+.map-dot{
+  width:10px; height:10px; border-radius:50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(141,198,63,.55);
+  animation: mapPulse 2s infinite;
+}
+.map-line{
+  width:34px; height:1px; background: linear-gradient(90deg, rgba(141,198,63,.9), rgba(141,198,63,0));
+}
+.map-label{
+  color:var(--white); font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+  background: rgba(10,10,10,.72);
+  border:1px solid rgba(141,198,63,.16);
+  padding:5px 9px; border-radius:100px; white-space:nowrap;
+}
+@keyframes mapPulse{
+  0%{box-shadow:0 0 0 0 rgba(141,198,63,.55);}
+  70%{box-shadow:0 0 0 12px rgba(141,198,63,0);}
+  100%{box-shadow:0 0 0 0 rgba(141,198,63,0);}
+}
+.map-side-list{
+  display:flex; flex-direction:column; gap:12px; margin-top:18px;
+}
+.map-side-item{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:14px 16px; background:var(--card2);
+  border:1px solid rgba(255,255,255,.05); border-radius:12px;
+}
+.map-side-left{display:flex; flex-direction:column; gap:2px;}
+.map-side-country{color:var(--white); font-size:15px; font-weight:700;}
+.map-side-note{color:var(--gray); font-size:12px;}
+.map-side-right{display:flex; align-items:center; gap:12px; flex-shrink:0;}
+.map-side-clock{
   color: var(--green);
-  margin-bottom: 12px;
+  font-family:'Space Mono', monospace;
+  font-size:16px; font-weight:700;
+  min-width:58px; text-align:right;
 }
-.metrics-title{
-  font-family: 'Bebas Neue', cursive;
-  letter-spacing: 2px;
-  line-height: 1;
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-.metrics-sub{
-  color: var(--light-gray);
-  font-size: 15px;
-  line-height: 1.6;
-}
-.visitor-number{
-  font-family: 'Bebas Neue', cursive;
-  font-size: clamp(68px, 10vw, 110px);
-  line-height: .9;
-  letter-spacing: 2px;
-  color: var(--white);
-  margin: 26px 0 10px;
-}
-.visitor-number span{
+.map-side-badge{
   color: var(--green);
+  font-family:'Bebas Neue', cursive;
+  font-size:24px; line-height:1;
+  min-width:28px; text-align:right;
 }
-.visitor-caption{
-  color: var(--gray);
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+@media(max-width:900px){.map-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.map-section{padding:60px 20px;}}
+
+
+/* CONTADOR AUDIENCIA */
+.audience-counter{
+  padding:70px 40px;
+  background:linear-gradient(180deg,#0a0a0a 0%,#101010 100%);
+  border-top:1px solid var(--border);
 }
-.clock-grid{
-  display:grid;
-  grid-template-columns: repeat(2, minmax(200px,1fr));
-  gap: 14px;
-  margin-top: 18px;
+.audience-box{
+  max-width:1100px;
+  margin:0 auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:36px;
+  text-align:center;
 }
-.clock-item{
-  background: var(--card2);
-  border: 1px solid rgba(255,255,255,.05);
-  border-radius: 14px;
-  padding: 16px 18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+.audience-label{
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:10px;
+  font-weight:700;
 }
-.clock-place{
-  display:flex;
-  flex-direction:column;
+.audience-title{
+  font-family:'Bebas Neue',cursive;
+  font-size:56px;
+  letter-spacing:2px;
+  margin-bottom:10px;
 }
-.clock-country{
-  color: var(--white);
-  font-size: 15px;
-  font-weight: 700;
+.audience-number{
+  font-family:'Bebas Neue',cursive;
+  font-size:90px;
+  color:var(--green);
+  line-height:1;
 }
-.clock-note{
-  color: var(--gray);
-  font-size: 12px;
+
+/* PODCAST SPOTIFY */
+.spotify-podcast{
+  padding:70px 40px;
+  background:var(--dark);
+  border-top:1px solid var(--border);
 }
-.clock-time{
-  font-family: 'Space Mono', monospace;
-  color: var(--green);
-  font-size: 18px;
-  font-weight: 700;
-  white-space: nowrap;
+.spotify-wrap{
+  max-width:1100px;
+  margin:0 auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:32px;
 }
-@media(max-width: 900px){
-  .metrics-grid{grid-template-columns:1fr;}
-}
-@media(max-width: 600px){
-  .metrics-section{padding: 60px 20px;}
-  .clock-grid{grid-template-columns:1fr;}
+.spotify-title{
+  font-family:'Bebas Neue',cursive;
+  font-size:48px;
+  letter-spacing:2px;
+  margin-bottom:18px;
 }
 
 </style>
@@ -2639,65 +2753,134 @@
 <!-- FOOTER -->
 <!-- UPDATED: footer - Corporate Professional -->
 
-
-<!-- VISITANTES ERADIO GLOBAL + HORA INTERNACIONAL -->
-<section id="metricas-globales" class="metrics-section">
-  <div class="metrics-grid">
-    <div class="metrics-card">
-      <div class="metrics-tag">VISITANTES ERADIO GLOBAL</div>
-      <div class="metrics-title">Comunidad digital en crecimiento</div>
-      <div class="metrics-sub">Nuestra presencia digital continúa expandiéndose con una audiencia que crece día tras día.</div>
-      <div class="visitor-number"><span>+</span><span id="visitorCounter">2500</span></div>
-      
+<!-- MAPA MUNDIAL ERADIO GLOBAL -->
+<section id="mapa-global" class="map-section">
+  <div class="map-wrap">
+    <div class="map-header">
+      <div class="section-tag">Mapa mundial eRadio Global</div>
+      <h2 class="section-title" style="margin-bottom:12px;">Presencia internacional en expansión</h2>
+      <p class="metrics-sub" style="max-width:860px;margin:0 auto;text-align:center;">
+        Una visualización institucional de la red global de eRadio Global y sus puntos de conexión internacional.
+      </p>
     </div>
 
-    <div class="metrics-card">
-      <div class="metrics-tag">HORA INTERNACIONAL</div>
-      <div class="metrics-title">Red de corresponsales</div>
-      <div class="metrics-sub">eRadio Global mantiene conexión con distintas regiones para una visión internacional y cercana.</div>
+    <div class="map-grid">
+      <div class="map-card">
+        <div class="worldmap-box">
+          <div class="map-gridlines"></div>
+          <div class="map-glow"></div>
 
-      <div class="clock-grid">
-        <div class="clock-item">
-          <div class="clock-place">
-            <div class="clock-country">🇨🇴 Colombia</div>
-            <div class="clock-note">Bogotá</div>
+          <svg class="worldmap-svg" viewBox="0 0 1000 500" aria-hidden="true">
+            <path fill="#8DC63F" d="M86 220l25-22 32-5 39-17 46-2 28-16 21 9 24-11 27 6 13 26-10 14-22 7-23 18-24 4-15 23-26 19-47 6-37 20-26-2-27-16-8-25 10-36z"/>
+            <path fill="#8DC63F" d="M350 158l37-13 61-3 36-17 63 2 53 13 51 0 47 20 25 28-12 27-34 11-17 20-58 2-29 16-54 5-45 14-60-5-48 8-39-15-20-33 4-32z"/>
+            <path fill="#8DC63F" d="M698 132l55-17 43 6 41-6 34 17 26 22 42 12 22 25-7 26-24 10-40 2-21 24-40 10-57-3-31 12-27-11-13-35 11-24-10-18 6-32z"/>
+            <path fill="#8DC63F" d="M470 300l35-10 28 8 31-6 24 18-10 22-28 17-31 2-27 20-35 2-16-20 5-30z"/>
+            <path fill="#8DC63F" d="M800 310l29-16 40 2 31 17 18 21-7 22-29 12-28-6-24 10-20-10-8-26z"/>
+          </svg>
+
+          <div class="map-point" style="left:27%; top:35%;">
+            <div class="map-dot"></div><div class="map-line"></div><div class="map-label">🇨🇦 Canadá</div>
           </div>
-          <div class="clock-time" id="time-colombia">--:--</div>
+          <div class="map-point" style="left:22%; top:48%;">
+            <div class="map-dot"></div><div class="map-line"></div><div class="map-label">🇲🇽 México</div>
+          </div>
+          <div class="map-point" style="left:31%; top:61%;">
+            <div class="map-dot"></div><div class="map-line"></div><div class="map-label">🇨🇴 Colombia</div>
+          </div>
+          <div class="map-point" style="left:34%; top:77%;">
+            <div class="map-dot"></div><div class="map-line"></div><div class="map-label">🇦🇷 Argentina</div>
+          </div>
+          <div class="map-point" style="left:72%; top:43%;">
+            <div class="map-dot"></div><div class="map-line"></div><div class="map-label">🇵🇰 Pakistán</div>
+          </div>
         </div>
+      </div>
 
-        <div class="clock-item">
-          <div class="clock-place">
-            <div class="clock-country">🇲🇽 México</div>
-            <div class="clock-note">Ciudad de México</div>
-          </div>
-          <div class="clock-time" id="time-mexico">--:--</div>
-        </div>
+      <div class="map-card">
+        <div class="section-tag" style="margin-bottom:10px;">Conexiones internacionales</div>
+        <h3 class="section-title" style="font-size:48px; margin-bottom:12px;">Cobertura estratégica</h3>
+        <p class="metrics-sub">
+          eRadio Global fortalece su imagen internacional con presencia visual en países clave vinculados a su red de corresponsales y audiencia.
+        </p>
 
-        <div class="clock-item">
-          <div class="clock-place">
-            <div class="clock-country">🇦🇷 Argentina</div>
-            <div class="clock-note">Buenos Aires</div>
+        <div class="map-side-list">
+          <div class="map-side-item">
+            <div class="map-side-left">
+              <div class="map-side-country">🇨🇦 Canadá</div>
+              <div class="map-side-note">Centro de operaciones</div>
+            </div>
+            <div class="map-side-right">
+              <div class="map-side-clock" id="clock-ca">--:--</div>
+              <div class="map-side-badge">HQ</div>
+            </div>
           </div>
-          <div class="clock-time" id="time-argentina">--:--</div>
-        </div>
 
-        <div class="clock-item">
-          <div class="clock-place">
-            <div class="clock-country">🇨🇦 Canadá</div>
-            <div class="clock-note">Calgary</div>
+          <div class="map-side-item">
+            <div class="map-side-left">
+              <div class="map-side-country">🇨🇴 Colombia</div>
+              <div class="map-side-note">Cobertura informativa</div>
+            </div>
+            <div class="map-side-right">
+              <div class="map-side-clock" id="clock-co">--:--</div>
+              <div class="map-side-badge">01</div>
+            </div>
           </div>
-          <div class="clock-time" id="time-canada">--:--</div>
-        </div>
 
-        <div class="clock-item">
-          <div class="clock-place">
-            <div class="clock-country">🇵🇰 Pakistán</div>
-            <div class="clock-note">Islamabad</div>
+          <div class="map-side-item">
+            <div class="map-side-left">
+              <div class="map-side-country">🇲🇽 México</div>
+              <div class="map-side-note">Conexión regional</div>
+            </div>
+            <div class="map-side-right">
+              <div class="map-side-clock" id="clock-mx">--:--</div>
+              <div class="map-side-badge">02</div>
+            </div>
           </div>
-          <div class="clock-time" id="time-pakistan">--:--</div>
+
+          <div class="map-side-item">
+            <div class="map-side-left">
+              <div class="map-side-country">🇦🇷 Argentina</div>
+              <div class="map-side-note">Proyección continental</div>
+            </div>
+            <div class="map-side-right">
+              <div class="map-side-clock" id="clock-ar">--:--</div>
+              <div class="map-side-badge">03</div>
+            </div>
+          </div>
+
+          <div class="map-side-item">
+            <div class="map-side-left">
+              <div class="map-side-country">🇵🇰 Pakistán</div>
+              <div class="map-side-note">Enlace internacional</div>
+            </div>
+            <div class="map-side-right">
+              <div class="map-side-clock" id="clock-pk">--:--</div>
+              <div class="map-side-badge">04</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+
+<section class="audience-counter">
+  <div class="audience-box">
+    <div class="audience-label">AUDIENCIA GLOBAL</div>
+    <div class="audience-title">Visitantes de eRadio Global</div>
+    <div id="audienceNumber" class="audience-number">0</div>
+  </div>
+</section>
+
+<section class="spotify-podcast">
+  <div class="spotify-wrap">
+    <div class="spotify-title">Podcast • La Mente Millonaria</div>
+    <iframe style="border-radius:12px" 
+      src="https://open.spotify.com/embed/show/2pJ0R7W0dManIeZDV4SSQw"
+      width="100%" height="232" frameborder="0"
+      allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
   </div>
 </section>
 
@@ -2808,12 +2991,12 @@
   <div class="sticky-info">
     <div class="sticky-cover">🎵</div>
     <div>
-      <div class="sticky-title">Crecimiento Personal — En Vivo</div>
-      <div class="sticky-artist" id="stickyStatus">eRadio Global — Radio de Valor</div>
+      <div class="sticky-title">Top 40 International Hits</div>
+      <div class="sticky-artist">eRadio Global — Live Stream</div>
     </div>
     <div class="sticky-on-air">
       <span style="width:5px;height:5px;background:#ff3333;border-radius:50%;animation:pulse 1s infinite;display:inline-block;"></span>
-      EN VIVO
+      ON AIR
     </div>
   </div>
 
@@ -2883,41 +3066,11 @@
   const radioAudio = new Audio('https://stream.zeno.fm/cuuwrtfwjo6tv');
   radioAudio.preload = 'none';
 
-
-  // ===== Connection UX (Satellite) =====
-  const radioStatusEl = document.getElementById('radioStatus');
-  const stickyStatusEl = document.getElementById('stickyStatus');
-  let connectTimer1 = null;
-  let connectTimer2 = null;
-
-  function setStatus(text){
-    if(radioStatusEl) radioStatusEl.textContent = text;
-    if(stickyStatusEl) stickyStatusEl.textContent = text;
-  }
-
-  function startConnecting(){
-    clearTimeout(connectTimer1); clearTimeout(connectTimer2);
-    setStatus('🛰 Conectando al satélite...');
-    connectTimer1 = setTimeout(()=>setStatus('🌍 Estableciendo enlace global...'), 3000);
-    // If it takes long, reassure
-    connectTimer2 = setTimeout(()=>setStatus('🛰 Conectando al satélite... (puede tardar 10–12s)'), 9000);
-  }
-
-  radioAudio.addEventListener('waiting', startConnecting);
-  radioAudio.addEventListener('stalled', startConnecting);
-  radioAudio.addEventListener('playing', ()=>{ clearTimeout(connectTimer1); clearTimeout(connectTimer2); setStatus('🔴 EN VIVO'); });
-  radioAudio.addEventListener('pause', ()=>{ clearTimeout(connectTimer1); clearTimeout(connectTimer2); setStatus('Listo para reproducir'); });
-  radioAudio.addEventListener('error', ()=>{ clearTimeout(connectTimer1); clearTimeout(connectTimer2); setStatus('⚠️ No se pudo conectar. Intenta de nuevo.'); });
-
-
   function togglePlay() {
     isPlaying = !isPlaying;
     const icons = [document.getElementById('playIcon'), document.getElementById('stickyPlayIcon')];
 
     if(isPlaying) {
-      const sticky = document.getElementById('stickyPlayer');
-      if(sticky) sticky.classList.add('visible');
-      startConnecting();
       radioAudio.play().catch(e => console.warn('Audio error:', e));
       icons.forEach(icon => {
         icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
@@ -3602,55 +3755,46 @@
 </div>
 
 
-
 <script>
 (function(){
-  const baseVisitors = 2500;
-  const dailyGrowth = 38;
-  const startDate = new Date('2026-03-06T00:00:00');
-
-  function updateVisitors(){
-    const now = new Date();
-    const msPerDay = 1000 * 60 * 60 * 24;
-    const days = Math.max(0, Math.floor((now - startDate) / msPerDay));
-    const value = baseVisitors + (days * dailyGrowth);
-    const counter = document.getElementById('visitorCounter');
-    if(counter){
-      counter.textContent = value.toLocaleString('en-US');
-    }
-  }
-
-  function formatTime(timeZone){
-    return new Intl.DateTimeFormat('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-      timeZone
-    }).format(new Date());
-  }
-
-  function updateClocks(){
-    const ids = {
-      'time-colombia': 'America/Bogota',
-      'time-mexico': 'America/Mexico_City',
-      'time-argentina': 'America/Argentina/Buenos_Aires',
-      'time-canada': 'America/Edmonton',
-      'time-pakistan': 'Asia/Karachi'
+  function updateWorldClocks(){
+    const zones = {
+      'clock-ca': 'America/Edmonton',
+      'clock-co': 'America/Bogota',
+      'clock-mx': 'America/Mexico_City',
+      'clock-ar': 'America/Argentina/Buenos_Aires',
+      'clock-pk': 'Asia/Karachi'
     };
-
-    Object.entries(ids).forEach(([id, tz]) => {
+    const now = new Date();
+    Object.entries(zones).forEach(([id, tz]) => {
       const el = document.getElementById(id);
-      if(el){
-        el.textContent = formatTime(tz);
+      if (el) {
+        el.textContent = now.toLocaleTimeString('en-GB', {
+          timeZone: tz,
+          hour: '2-digit',
+          minute: '2-digit'
+        });
       }
     });
   }
-
   document.addEventListener('DOMContentLoaded', function(){
-    updateVisitors();
-    updateClocks();
-    setInterval(updateClocks, 1000);
+    updateWorldClocks();
+    setInterval(updateWorldClocks, 1000);
   });
+})();
+</script>
+
+
+<script>
+(function(){
+  const base = 2500;      // número inicial
+  const daily = 38;       // crecimiento diario
+  const start = new Date("2026-01-01");
+  const now = new Date();
+  const diff = Math.floor((now - start)/(1000*60*60*24));
+  const total = base + diff * daily;
+  const el = document.getElementById("audienceNumber");
+  if(el){ el.textContent = total.toLocaleString(); }
 })();
 </script>
 
