@@ -39,10 +39,10 @@
 {
   "@context": "https://schema.org",
   "@type": "VideoObject",
-  "name": "Podcast del Migrante — Episodio destacado",
-  "description": "Producción original de eRadio Global Corp. Historias reales de la comunidad migrante, cada martes desde Brooks, Alberta.",
-  "thumbnailUrl": "https://img.youtube.com/vi/bhDl0Waxn0U/hqdefault.jpg",
-  "embedUrl": "https://www.youtube.com/embed/bhDl0Waxn0U"
+  "name": "3 REALIDADES que TODO MIGRANTE en Canadá DEBE CONOCER | Construcción, Violencia y Facebook",
+  "description": "En este nuevo episodio de El Podcast del Migrante analizamos tres temas que están impactando a miles de inmigrantes y que pueden ayudarte a tomar mejores decisiones: cómo se mueve la ilegalidad en algunos trabajos de construcción, qué ocurre cuando existe violencia intrafamiliar durante un proceso migratorio, y qué alertas debes tener al comprar un vehículo por Facebook Marketplace. Participan Nelson Vahos (Host), Andrés (Los Cuentos de Andrés), Tomás Velázquez, Carmen y Raza en Canadá. Nuestro objetivo es brindar información basada en experiencias reales para que cada migrante pueda proteger su futuro en Canadá.",
+  "thumbnailUrl": "https://img.youtube.com/vi/-k4dzsDrA64/hqdefault.jpg",
+  "embedUrl": "https://www.youtube.com/embed/-k4dzsDrA64"
 }
 </script>
 <script type="application/ld+json">
@@ -285,6 +285,7 @@ section{position:relative;}
 .vtitle-overlay{position:absolute;left:.9rem;right:.9rem;bottom:.7rem;color:#fff;font-size:.95rem;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.6);}
 .vcard-body{padding:.7rem .2rem 0;}
 .vcard-cat{font-size:.7rem;opacity:.55;}
+.vcard-desc{font-size:.8rem;opacity:.68;margin-top:.35rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .vempty{font-size:.85rem;opacity:.5;padding:1rem .2rem;}
 
 /* --- Lightbox --- */
@@ -658,18 +659,18 @@ const ICONS = {
 };
 
 const PROGRAMACION = [
-  { key:"podcast", title:"Podcast del Migrante", badge:"Producción Original de eRadio Global Corp.", day:"Martes", time:"7:00 PM", tz:"Hora de Alberta", city:"Desde los estudios de eRadio Global Corp. en Brooks, Alberta", presenter:"Nelson Vahos", desc:"Historias reales de la comunidad migrante en Canadá.", video:"bhDl0Waxn0U" },
+  { key:"podcast", title:"Podcast del Migrante", badge:"Producción Original de eRadio Global Corp.", day:"Martes", time:"7:00 PM", tz:"Hora de Alberta", city:"Desde los estudios de eRadio Global Corp. en Brooks, Alberta", presenter:"Nelson Vahos", desc:"Historias reales de la comunidad migrante en Canadá.", video:"-k4dzsDrA64" },
   { key:"despertando", title:"Despertando Consciencia", badge:"Creado, dirigido y conducido por Rocío Adriana Páez. Transmitido por eRadio Global Corp.", day:"Miércoles", time:"8:00 PM", tz:"Hora de Colombia", city:null, presenter:"Rocío Adriana Páez", profile:"Periodista · Analista internacional · Licensed PNL · TEDx Speaker · Conferencista · CEO y fundadora de De Profesión Mujer", desc:"Un espacio de reflexión y crecimiento personal.", video:"cMV1oS02nMU" },
 ];
 
 const PROYECTOS = [
-  { key:"podcast", title:"Podcast del Migrante", badge:"Una producción original de eRadio Global Corp.", desc:"El proyecto insignia de eRadio Global Corp.: historias que conectan comunidades.", schedule:"Martes · 7:00 PM · Hora de Alberta", city:"Producción desde Brooks, Alberta", video:"bhDl0Waxn0U" },
+  { key:"podcast", title:"Podcast del Migrante", badge:"Una producción original de eRadio Global Corp.", desc:"El proyecto insignia de eRadio Global Corp.: historias que conectan comunidades.", schedule:"Martes · 7:00 PM · Hora de Alberta", city:"Producción desde Brooks, Alberta", video:"-k4dzsDrA64" },
   { key:"desafio", title:"Desafío 100 Empresas en Calgary", badge:"Una producción original de eRadio Global Corp.", desc:"Un proyecto documental de largo plazo: historias empresariales de la comunidad de Calgary.", objective:"Visibilizar el emprendimiento latino en Alberta.", video:"xJaXI3r83sA" },
   { key:"despertando", title:"Despertando Consciencia", badge:"Programa creado, dirigido y conducido por Rocío Adriana Páez. Transmitido por eRadio Global Corp.", desc:"Un espacio transmitido por eRadio Global Corp., propiedad de su creadora.", schedule:"Miércoles · 8:00 PM · Hora de Colombia", video:"cMV1oS02nMU" },
 ];
 
 const VIDEO_LIBRARY = {
-  podcast:{ icon:"podcast", title:"Podcast del Migrante", desc:"Historias reales de la comunidad migrante, cada martes desde Brooks, Alberta.", badge:"Producción Original de eRadio Global Corp.", color:"var(--green)", videos:[{ id:"bhDl0Waxn0U", title:"Episodio destacado" }] },
+  podcast:{ icon:"podcast", title:"Podcast del Migrante", desc:"Historias reales de la comunidad migrante, cada martes desde Brooks, Alberta.", badge:"Producción Original de eRadio Global Corp.", color:"var(--green)", videos:[{ id:"-k4dzsDrA64", title:"3 REALIDADES que TODO MIGRANTE en Canadá DEBE CONOCER | Construcción, Violencia y Facebook", desc:"En este nuevo episodio de El Podcast del Migrante analizamos tres temas que están impactando a miles de inmigrantes y que pueden ayudarte a tomar mejores decisiones: cómo se mueve la ilegalidad en algunos trabajos de construcción, qué ocurre cuando existe violencia intrafamiliar durante un proceso migratorio, y qué alertas debes tener al comprar un vehículo por Facebook Marketplace. Participan Nelson Vahos (Host), Andrés (Los Cuentos de Andrés), Tomás Velázquez, Carmen y Raza en Canadá. Nuestro objetivo es brindar información basada en experiencias reales para que cada migrante pueda proteger su futuro en Canadá." }] },
   desafio:{ icon:"video", title:"Desafío 100 Empresas en Calgary", desc:"Un recorrido documental por historias empresariales de la comunidad.", badge:"Producción Original de eRadio Global Corp.", color:"var(--amber)", videos:[{ id:"xJaXI3r83sA", title:"Entrevista destacada" }] },
   coberturas:{ icon:"clap", title:"Coberturas y Producciones Especiales", desc:"Eventos, debates y momentos comunitarios cubiertos por nuestro equipo.", badge:"Producción de eRadio Global Corp.", color:"#7FA8C9", videos:[{ id:"HaKJK5-LOvk", title:"Debate de Alcaldes de Brooks" }] },
   despertando:{ icon:"stream", title:"Despertando Consciencia", desc:"Programa creado por Rocío Adriana Páez · Transmitido por eRadio Global Corp.", badge:"Transmitido por eRadio Global Corp.", color:"#B9B2A6", videos:[{ id:"cMV1oS02nMU", title:"Episodio destacado" }] },
@@ -819,7 +820,7 @@ document.querySelectorAll(".reveal").forEach(elm=>revealObserver.observe(elm));
             <div class="vplay">${icon("play")}</div>
             <div class="vtitle-overlay">${v.title}</div>
           </div>
-          <div class="vcard-body"><div class="vcard-cat">${cat.title}</div></div>`;
+          <div class="vcard-body"><div class="vcard-cat">${cat.title}</div>${v.desc?`<div class="vcard-desc">${v.desc}</div>`:""}</div>`;
         card.addEventListener("click", ()=>openLightbox(v.id));
         track.appendChild(card);
       });
@@ -887,7 +888,7 @@ document.addEventListener("click", e=>{
 /* --- PORTAFOLIO --- */
 (function(){
   const masonry = document.getElementById("portfolioMasonry");
-  const items = [["Debate de Alcaldes de Brooks","HaKJK5-LOvk"],["Podcast del Migrante","bhDl0Waxn0U"],["Desafío 100 Empresas","xJaXI3r83sA"],["Despertando Consciencia","cMV1oS02nMU"]];
+  const items = [["Debate de Alcaldes de Brooks","HaKJK5-LOvk"],["Podcast del Migrante","-k4dzsDrA64"],["Desafío 100 Empresas","xJaXI3r83sA"],["Despertando Consciencia","cMV1oS02nMU"]];
   const heights = [260,320,240,290];
   items.forEach(([tag],i)=>{
     const item = el("div","m-item reveal");
