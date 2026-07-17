@@ -254,7 +254,9 @@ section{position:relative;}
 .programming{padding:var(--sp-xl) 0;}
 .prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--sp-md);margin-top:var(--sp-lg);}
 .prog-card{padding:var(--sp-md);}
-.prog-media{aspect-ratio:16/9;border-radius:var(--r-md);margin-bottom:var(--sp-sm);background:radial-gradient(120% 100% at 20% 0%,#233327,#0B0F0C 65%);}
+.prog-media{aspect-ratio:16/9;border-radius:var(--r-md);margin-bottom:var(--sp-sm);background:radial-gradient(120% 100% at 20% 0%,#233327,#0B0F0C 65%);overflow:hidden;position:relative;}
+.prog-media img{width:100%;height:100%;object-fit:cover;}
+.prog-media::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.35),transparent 55%);}
 .prog-chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem;}
 .time-chip{display:inline-flex;align-items:center;gap:.4em;font-size:.82rem;font-weight:600;padding:.4em .85em;border-radius:var(--r-pill);background:var(--bg-gray);}
 .prog-title{font-size:1.2rem;font-weight:800;margin-top:.8rem;}
@@ -780,7 +782,7 @@ document.querySelectorAll(".reveal").forEach(elm=>revealObserver.observe(elm));
     const isBcast = p.badge.toLowerCase().includes("transmitido");
     const card = el("div","prog-card card reveal");
     card.innerHTML = `
-      <div class="prog-media"></div>
+      <div class="prog-media">${p.video?`<img src="${ytThumb(p.video)}" alt="" loading="lazy">`:""}</div>
       <span class="badge ${isBcast?"bcast":""}">${p.badge}</span>
       <h3 class="prog-title">${p.title}</h3>
       <p class="prog-desc">${p.desc}</p>
