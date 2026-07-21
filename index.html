@@ -348,6 +348,8 @@ section{position:relative;}
 .map-svg .pulse-dot{fill:var(--green);}
 .map-svg .pulse-dot.hq{fill:#fff;}
 .map-svg .ring{fill:none;stroke:var(--green);stroke-width:1.2;opacity:.5;transform-origin:center;animation:ringpulse 2.6s ease-out infinite;}
+.map-svg .map-flag-svg{filter:drop-shadow(0 2px 5px rgba(0,0,0,.5));}
+.map-svg .map-hq-label{fill:#fff;font-size:11px;font-weight:700;font-family:var(--font-d);letter-spacing:.02em;}
 @keyframes ringpulse{0%{transform:scale(.4);opacity:.7;}100%{transform:scale(2.6);opacity:0;}}
 .paused .pulse-line,.paused .ring{animation-play-state:paused!important;}
 .map-note{margin-top:var(--sp-sm);font-size:.78rem;opacity:.55;}
@@ -355,6 +357,9 @@ section{position:relative;}
 .ctry-card{padding:var(--sp-md);}
 .ctry-head{display:flex;align-items:center;gap:.6rem;}
 .ctry-flag{font-size:1.6rem;}
+.flag-icon{display:inline-flex;width:28px;height:19px;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.18);flex-shrink:0;}
+.flag-icon svg{width:100%;height:100%;display:block;}
+.flag-icon.map-flag{width:22px;height:15px;box-shadow:0 0 0 1px rgba(255,255,255,.35),0 2px 6px rgba(0,0,0,.4);}
 .ctry-name{font-family:var(--font-d);font-weight:800;font-size:1.05rem;}
 .ctry-rep{font-size:.85rem;opacity:.65;margin-top:.1rem;}
 .hq-tag{font-size:.72rem;font-weight:700;color:var(--green-light);margin-top:.3rem;display:inline-block;}
@@ -684,6 +689,21 @@ const ICONS = {
 };
 
 /* ============================================================
+   BANDERAS (SVG propios) — se usan en lugar del emoji de bandera
+   porque varios sistemas (notablemente Windows) no renderizan
+   emoji de bandera y muestran el código de país en texto plano.
+   Proporción 3:2, viewBox 0 0 30 20.
+   ============================================================ */
+const FLAGS = {
+  CA: `<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><rect width="7.5" height="20" fill="#d52b1e"/><rect x="22.5" width="7.5" height="20" fill="#d52b1e"/><path d="M15 4.5l1.2 2.6 2.6-1.2-.7 2.7 2.4 1.1-2.4 1.1.7 2.7-2.6-1.2L15 14.8l-1.2-2.5-2.6 1.2.7-2.7-2.4-1.1 2.4-1.1-.7-2.7 2.6 1.2z" fill="#d52b1e"/></svg>`,
+  PK: `<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#01411C"/><rect width="7.5" height="20" fill="#fff"/><circle cx="18" cy="10" r="5" fill="#fff"/><circle cx="19.8" cy="10" r="4.1" fill="#01411C"/><path d="M22 6.2l.7 2.2 2.3.1-1.8 1.4.7 2.2-1.9-1.3-1.9 1.3.7-2.2-1.8-1.4 2.3-.1z" fill="#fff"/></svg>`,
+  AR: `<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><rect width="30" height="6.67" fill="#74ACDF"/><rect y="13.33" width="30" height="6.67" fill="#74ACDF"/><circle cx="15" cy="10" r="2.3" fill="#F6B40E" stroke="#85340A" stroke-width="0.3"/></svg>`,
+  MX: `<svg viewBox="0 0 30 20"><rect width="10" height="20" fill="#006341"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#CE1126"/><circle cx="15" cy="10" r="2.6" fill="#8B5E3C"/></svg>`,
+  CO: `<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#FCD116"/><rect y="10" width="30" height="5" fill="#003893"/><rect y="15" width="30" height="5" fill="#CE1126"/></svg>`,
+};
+function flagIcon(code, cls){ return `<span class="flag-icon ${cls||""}" aria-hidden="true">${FLAGS[code]||""}</span>`; }
+
+/* ============================================================
    SISTEMA BILINGÜE (ES/EN)
    ============================================================ */
 let currentLang = (localStorage.getItem("eradio_lang") === "en") ? "en" : "es";
@@ -778,7 +798,7 @@ const UI = {
   portEyebrow:B("Portafolio","Portfolio"), portTitle:B("Producciones destacadas","Featured productions"), portSub:B("Debates, coberturas, entrevistas y producciones que demuestran nuestra capacidad.","Debates, coverage, interviews, and productions that showcase our capability."),
   netEyebrow:B("Nuestra Red Global","Our Global Network"), netTitle:B("Conectando historias, personas y comunidades desde diferentes lugares del mundo.","Connecting stories, people, and communities from different places around the world."), netSub:B("eRadio Global Corp. desarrolla una red internacional de colaboración y comunicación desde Canadá hacia diferentes países.","eRadio Global Corp. builds an international network of collaboration and communication from Canada to different countries."),
   mapNote:B("En pantallas pequeñas, esta animación se sustituye por las tarjetas de país a continuación.","On small screens, this animation is replaced by the country cards below."),
-  hqTag:B("★ Sede Principal — Headquarters","★ Main Office — Headquarters"),
+  hqTag:B("★ Sede Principal — Brooks, Alberta","★ Main Office — Brooks, Alberta"),
   horaLocal:B("Hora local","Local time"), clima:B("Clima","Weather"), realtime:B("Información en tiempo real","Real-time information"), noData:B("Información temporalmente no disponible","Information temporarily unavailable"),
   facebookOficial:B("Facebook Oficial","Official Facebook"),
   contactEyebrow:B("Contacto","Contact"), contactTitle:B("Hablemos de tu proyecto","Let's talk about your project"), contactSub:B("Empresas, aliados, invitados y patrocinadores — estamos preparados para escucharte.","Companies, partners, guests, and sponsors — we're ready to listen."),
@@ -1033,6 +1053,16 @@ function buildMap(){
   GLOBAL_NETWORK.forEach(c=>{
     svg += `<circle class="ring" cx="${c.x}" cy="${c.y}" r="6"/>`;
     svg += `<circle class="pulse-dot ${c.isHQ?"hq":""}" cx="${c.x}" cy="${c.y}" r="${c.isHQ?7:5}"/>`;
+    // Bandera del país, flotando sobre su marcador (SVG anidado, no depende de fuentes emoji del sistema)
+    const fw = 26, fh = fw*(20/30);
+    const flagMarkup = (FLAGS[c.code]||"").replace(
+      '<svg viewBox="0 0 30 20">',
+      `<svg class="map-flag-svg" x="${c.x - fw/2}" y="${c.y - fh - 14}" width="${fw}" height="${fh}" viewBox="0 0 30 20">`
+    );
+    svg += flagMarkup;
+    if(c.isHQ){
+      svg += `<text x="${c.x}" y="${c.y - fh - 20}" class="map-hq-label" text-anchor="middle">${c.city ? T(c.city).split(",")[0] : ""}</text>`;
+    }
   });
   mapSvg.innerHTML = svg;
 }
@@ -1071,7 +1101,7 @@ function renderNetwork(){
     c.lat=lat; c.lng=lng;
     const card = el("div","ctry-card card-glass reveal");
     card.innerHTML = `
-      <div class="ctry-head"><span class="ctry-flag" aria-hidden="true">${c.flag}</span>
+      <div class="ctry-head">${flagIcon(c.code)}
         <div><div class="ctry-name">${T(c.country)}</div><div class="ctry-rep">${T(c.rep)}</div></div>
       </div>
       ${c.isHQ?`<span class="hq-tag">${T(UI.hqTag)}</span>`:""}
